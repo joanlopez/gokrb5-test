@@ -4,8 +4,8 @@ REALM=RESDOM.GOKRB5
 DOMAIN=resdom.gokrb5
 SERVER_HOST=kdc.resdom.gokrb5
 ADMIN_USERNAME=adminuser
-HOST_PRINCIPALS="kdc.resdom.gokrb5 host.resdom.gokrb5"
-SPNs="HTTP/host.resdom.gokrb5"
+HOST_PRINCIPALS="kdc.resdom.gokrb5 host.resdom.gokrb5 host.sub.resdom.gokrb5"
+SPNs="HTTP/host.resdom.gokrb5 HTTP/host.sub.resdom.gokrb5"
 
 create_entropy() {
    while true
@@ -39,7 +39,12 @@ ENTROPY_PID=$!
     done
   fi
 
-  /usr/sbin/kadmin.local -q "add_principal -pw spnpasswordvalue -kvno 1 HTTP/host.resdom.gokrb5"
+if [ ! -z "${SPNs}" ]; then
+    for spn in ${SPNs}
+    do
+      /usr/sbin/kadmin.local -q "add_principal -pw spnpasswordvalue -kvno 1 $spn"
+    done
+  fi
 
   /usr/sbin/kadmin.local -q "add_principal -pw passwordvalue -kvno 1 testuser1"
   /usr/sbin/kadmin.local -q "add_principal +requires_preauth -pw passwordvalue -kvno 1 testuser2"
