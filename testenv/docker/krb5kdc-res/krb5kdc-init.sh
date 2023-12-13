@@ -53,8 +53,6 @@ if [ ! -z "${SPNs}" ]; then
   # Set up trust
   /usr/sbin/kadmin.local -q "add_principal -requires_preauth -pw trustpasswd -kvno 1 krbtgt/TEST.GOKRB5@RESDOM.GOKRB5"
   /usr/sbin/kadmin.local -q "add_principal -requires_preauth -pw trustpasswd -kvno 1 krbtgt/RESDOM.GOKRB5@TEST.GOKRB5"
-  /usr/sbin/kadmin.local -q "add_principal -requires_preauth -pw trustpasswd -kvno 1 krbtgt/SUB.TEST.GOKRB5@RESDOM.GOKRB5"
-  /usr/sbin/kadmin.local -q "add_principal -requires_preauth -pw trustpasswd -kvno 1 krbtgt/RESDOM.GOKRB5@SUB.TEST.GOKRB5"
 
 
   echo "Kerberos initialisation complete"
